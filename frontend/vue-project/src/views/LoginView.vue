@@ -9,16 +9,16 @@
             New user? Sign up now! Let's get started!<br>
         </div>
         <form id="login-form">
-          <label for="login_id" id="login_id_label">User name or Email</label>
-          <input type="text" id="login_id" placeholder="">
+          <label id="login_id_label">User name or Email</label>
+          <input type="text" id="login_id" placeholder="" v-model="login_id">
           <div class="input_underline"></div>
-          <label for="password" id="login_password_label">Password</label>
-          <input type="password" id="login_password" placeholder="">
+          <label id="login_password_label">Password</label>
+          <input type="password" id="login_password" placeholder="" v-model="login_password">
           <div class="input_underline"></div>
 
           <div class="login_forgot">Forgot Password?</div>
           <br>
-          <button type="button" onClick="">Sign In</button>
+          <button type="button" @click="onSignInClick">Sign In</button>
         </form>
       </div>
       <div class="right-part"></div>
@@ -26,6 +26,25 @@
   </div>
 </template>
 <script setup lang="ts">
+import { ref } from "vue";
+import axios from "axios";
+
+const login_id = ref('');
+const login_password = ref('');
+
+const onSignInClick = () => {
+
+  const loginData = new FormData();
+
+  loginData.append('loginId', login_id.value);
+  loginData.append('loginPassword', login_password.value);
+
+  axios.post('http://localhost:8080/login', loginData).then(response => {
+    console.log(response);
+  }).catch(error => {
+    console.log(error);
+  });
+}
 </script>
 <style scoped>
 .login {
