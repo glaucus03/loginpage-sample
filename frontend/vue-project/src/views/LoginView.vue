@@ -1,53 +1,47 @@
 <template>
-  <div class="login">
-    <div class="card">
-      <div class="left-part">
-        <div class="login-form_title">Login Page Sample</div>
-        <div class="login-form_description">
+  <div :class="login.pagebackground">
+    <div :class="login.content_card">
+      <div :class="login.left_part">
+        <div :class="login.title">Login Page Sample</div>
+        <div :class="login.description">
           Welcome to LoginPageSample! <br>
             Log in securely and enjoy our platform. <br>
             New user? Sign up now! Let's get started!<br>
         </div>
         <form id="login-form">
           <label id="login_id_label">User name or Email</label>
-          <input type="text" id="login_id" placeholder="" v-model="login_id">
-          <div class="input_underline"></div>
+          <input type="text" id="login_id" placeholder="" v-model="inputLoginId">
+          <div :class="login.input_underline"></div>
           <label id="login_password_label">Password</label>
-          <input type="password" id="login_password" placeholder="" v-model="login_password">
-          <div class="input_underline"></div>
+          <input type="password" id="login_password" placeholder="" v-model="inputLoginPassword">
+          <div :class="login.input_underline"></div>
 
-          <div class="login_forgot">Forgot Password?</div>
+          <div :class="login.forgot_text">Forgot Password?</div>
           <br>
-          <button type="button" @click="onSignInClick">Sign In</button>
+          <button type="button" @click="onSignInClick(inputLoginId, inputLoginPassword)">Sign In</button>
         </form>
       </div>
-      <div class="right-part"></div>
+      <div :class="login.right_part"></div>
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from "vue";
-import axios from "axios";
+import { ref } from 'vue';
+import { storeToRefs } from 'pinia';
+import { loginDataStore } from '@/stores/modules/loginData';
 
-const login_id = ref('');
-const login_password = ref('');
+// setup pinia
+const loginStore = loginDataStore();
+const { reset, onSignInClick } = loginStore;
 
-const onSignInClick = () => {
+// setup filed
+const inputLoginId = ref("");
+const inputLoginPassword = ref("");
 
-  const loginData = new FormData();
-
-  loginData.append('loginId', login_id.value);
-  loginData.append('loginPassword', login_password.value);
-
-  axios.post('http://localhost:8080/login', loginData).then(response => {
-    console.log(response);
-  }).catch(error => {
-    console.log(error);
-  });
-}
 </script>
-<style scoped>
-.login {
+<style module="login">
+
+.pagebackground {
   position: absolute;
   width: 100vw;
   height: 100vh;
@@ -58,7 +52,7 @@ const onSignInClick = () => {
 }
 
 
-.card {
+.content_card {
   width: 80vw;
   height: 80vh;
   margin-top: 5%; 
@@ -69,7 +63,7 @@ const onSignInClick = () => {
   display:flex;
 }
 
-.left-part {
+.left_part {
   width: 70%;
   height: 100%;
   display: flex;
@@ -80,19 +74,50 @@ const onSignInClick = () => {
 
 }
 
-.login-form_title {
+.title {
   margin-top: 60px;
   font-size: 2em;
   font-family: "Times";
   color: black;
 }
 
-.login-form_description {
+.description {
   margin-top: 40px;
   font-size: 1em;
   font-family: "Times";
   color: grey;
 }
+
+.input_underline {
+  position: relative;
+  border-top: 1px solid #c2c2c2;
+}
+
+.forgot_text {
+  text-align: right;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  font-size: 0.75em;
+  font-family: "Times";
+  color: grey;
+}
+
+.right_part {
+  width: 100%;
+  height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 80px;
+  color:ghostwhite ;
+  display: flex;
+  flex-direction: column;
+  border-radius:0 30px 30px 0;
+  background-image: linear-gradient(90deg, rgba(233, 233, 233, 1), rgba(172, 172, 172, 1));
+
+}
+</style>
+
+<style scoped>
 
 #login-form {
   position: relative;
@@ -109,33 +134,6 @@ const onSignInClick = () => {
   font-size: 0.75em;
   font-family: "Times";
   color: grey;
-}
-.input_underline {
-  position: relative;
-  border-top: 1px solid #c2c2c2;
-}
-
-.login_forgot {
-  text-align: right;
-  margin-top: 10px;
-  margin-bottom: 50px;
-  font-size: 0.75em;
-  font-family: "Times";
-  color: grey;
-}
-
-.right-part {
-  width: 100%;
-  height: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  font-size: 80px;
-  color:ghostwhite ;
-  display: flex;
-  flex-direction: column;
-  border-radius:0 30px 30px 0;
-  background-image: linear-gradient(90deg, rgba(233, 233, 233, 1), rgba(172, 172, 172, 1));
-
 }
 
 input {
