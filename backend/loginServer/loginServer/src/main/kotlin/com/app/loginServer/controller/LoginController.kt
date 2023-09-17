@@ -1,18 +1,18 @@
-package com.app.loginServer.controller
+package com.app.loginServer
 
+import org.springframework.stereotype.Controller
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.ui.Model
 import org.springframework.ui.set
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.RestController
 
-@RestController
+@Controller
 class LoginController {
 
-  @GetMapping("/test")
+  @GetMapping("/")
   fun root(): ResponseEntity<String> {
-    return ResponseEntity("test", HttpStatus.OK)
+    return ResponseEntity("root", HttpStatus.OK)
   }
 
   @GetMapping("/login")

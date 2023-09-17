@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --mode development",
+    "mock": "vite --mode mock",
     "build": "run-p type-check build-only",
     "preview": "vite preview",
     "test:unit": "vitest",
@@ -16,6 +17,7 @@
   },
   "dependencies": {
     "@chemzqm/neovim": "^5.9.5",
+    "dotenv": "^16.3.1",
     "pinia": "^2.1.6",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4"

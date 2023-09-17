@@ -25,7 +25,7 @@ export const loginDataStore = defineStore('loginDataStore', {
       loginData.append('loginId', this.loginId);
       loginData.append('loginPassword', this.loginPassword);
 
-      axios.post('/login', loginData).then(response => {
+      axios.post('http://localhost:8080/login', loginData, {headers: {'Content-Type': 'application/x-www-form-urlencoded',}}).then(response => {
         console.log(response);
       }).catch(error => {
         console.log(error);
